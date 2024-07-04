@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Resume Download</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    {% if resume.payment_status %}
+    <head>
+        <link rel="stylesheet" href="{% static 'css/resume.css' %}">
+        <title>Resume</title>
+      </head>
+      <body>
+        <div style="display: flex;flex-direction: column;align-items: center;">
+            <h1 style="color: white; text-align: center">Your Resume</h1>
+            <button class="download-btn" onclick="downloadResume()">
+                Download PDF
+              </button>
+        </div>
+        <div class="page_">
+          <div class="container_" id="resume">
+            <div class="card-container">
+              <div class="vertical-line"></div>
+              <div class="card">
+                <div class="info">
+                  <h1>{{resume.first_name}} <br />{{resume.last_name}}</h1>
+                  <h2>LAWYER</h2>
+                  <div class="contact">
+                    <div>
+                      <img src="{% static 'images/phone.png' %}" /> {{resume.phone}}
+                    </div>
+                    <div>
+                      <img src="{% static 'images/mail_box.png' %}" /> {{resume.email_web}}
+                    </div>
+                    {% if resume.website %}
+                    <div>
+                      <img src="{% static 'images/website.png' %}" /> {{resume.website}}
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>  
+                <div class="photo-container">
+                  <div class="pink-box"></div>
+                  <div class="profile_photo">
+                    <img src="{% static 'images/image.png' %}" alt="Profile Photo" />
+                  </div>
+                </div>
+              </div>
+              <div class="main-content">
+                <div class="left-section">
+                  <div class="profile-section">
+                    <div>
+                      <img src="{% static 'images/profile_icon.png' %}" />
+                      <span class="left-section-heading">PROFILE</span>
+                    </div>
+                    <div class="profile-description">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Sapiente, ea ullam? Molestias, optio tenetur. Quam doloribus
+                      pariatur voluptatem in molestias distinctio officiis, ad earum
+                      ducimus dicta enim facere exercitationem non?
+                    </div>
+                  </div>
+                  <div class="language-section">
+                    <div class="language-section-heading">
+                      <img src="{% static 'images/language_icon.png' %}" />
+                      <span class="left-section-heading">LANGUAGES</span>
+                    </div>
+                    <div class="languages-name-container">
+                      {% for lang in resume.languages_known %}
+                      <div class="language-name">
+                        {{lang}}
+                        <div></div>
+                      </div>
+                      {% endfor %}
+                      <!-- <div class="language-name">
+                        HINDI
+                        <div></div>
+                      </div>
+                      <div class="language-name">
+                        FRENCH
+                        <div></div>
+                      </div>
+                      <div class="language-name">
+                        GERMAN
+                        <div></div>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="skills-section">
+                    <div class="skills-section-heading">
+                      <img src="{% static 'images/skills_icon.png' %}" />
+                      <span class="left-section-heading">SKILLS</span>
+                    </div>
+                    <div class="skills-list">
+                      <ul>
+                        {% for skill in resume.skills %}
+                        <li>{{skill}}</li>
+                        {% endfor %}
+                        <!-- <li>Lorem ipsum</li>
+                        <li>Lorem ipsum</li>
+                        <li>Lorem ipsum</li>
+                        <li>Lorem ipsum</li> -->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="right-section">
+                  <div class="education-section">
+                    <div class="education-section-heading">
+                      <img src="{% static 'images/education_icon.png' %}" />
+                      <span class="left-section-heading">EDUCATION</span>
+                    </div>
+                    <div class="education-container">
+                      <ul>
+                        {% for edu in resume.education %}
+                        <li>
+                            <div class="education-item">
+                              <div class="degree-year">{{edu.year}} - {{edu.year}}</div>
+                              <div class="degree-details">
+                                <div><strong>{{edu.degree}}</strong></div>
+                                <div class="college-name">{{edu.institution}}</div>
+                              </div>
+                            </div>
+                          </li>
+                        {% endfor %}
+                        <li>
+                          <div class="education-item">
+                            <div class="degree-year">2000 - 2003</div>
+                            <div class="degree-details">
+                              <div><strong>Degree Name</strong></div>
+                              <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                                adipiscing elit, sed</div>
+                            </div>
+                          </div>
+                        <!-- </li>
+                        <li>
+                          <div class="education-item">
+                            <div class="degree-year">2000 - 2003</div>
+                            <div class="degree-details">
+                              <div><strong>Degree Name</strong></div>
+                              <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                                adipiscing elit, sed</div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="education-item">
+                            <div class="degree-year">2000 - 2003</div>
+                            <div class="degree-details">
+                              <div><strong>Degree Name</strong></div>
+                              <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                                adipiscing elit, sed</div>
+                            </div>
+                          </div>
+                        </li> -->
+                        
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="experience-section">
+                    <div class="experience-section-heading">
+                        <img src="{% static 'images/experience_icon.png' %}" />
+                        <span class="left-section-heading">EXPERIENCE</span>
+                      </div>
+                      <div class="experience-container">
+                        <ul>
+                            {% for exp in resume.experience %}
+                            <li>
+                                <div class="experience-item">
+                                  <div class="job-year">{{exp.year}}-{{exp.year}} </div>
+                                  <div class="company-details">
+                                    <div><strong>{{exp.job_title}}</strong></div>
+                                    <div class="company-name">{{exp.company}}</div>
+                                  </div>
+                                </div>
+                              </li>
+                            {% endfor %}
+                          <li>
+                            <div class="experience-item">
+                              <div class="job-year">2000 - 2003</div>
+                              <div class="company-details">
+                                <div><strong>Degree Name</strong></div>
+                                <div class="company-name">Lorem ipsum dolor sit amet, consectetuer
+                                  adipiscing elit, sed</div>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div class="footer-section">
+                <div>
+                    <img src="{% static 'images/phone.png' %}" />
+                    <div>Lorem Ipsum</div>
+                </div>
+                <div>
+                    <img src="{% static 'images/phone.png' %}" />
+                    <div>Lorem Ipsum</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+        <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
+        <!-- <script>
+          function downloadResume() {
+              window.jsPDF = window.jspdf.jsPDF;
+          
+              var doc = new jsPDF();
+          
+              var page = document.querySelector('.container_');
+          
+              // Wait for the images to load
+              var images = page.querySelectorAll('img');
+              var loadedCount = 0;
+          
+              function checkIfAllImagesLoaded() {
+                  loadedCount++;
+                  if (loadedCount === images.length) {
+                      generatePDF();
+                  }
+              }
+          
+              images.forEach((img) => {
+                  if (img.complete) {
+                      checkIfAllImagesLoaded();
+                  } else {
+                      img.onload = checkIfAllImagesLoaded;
+                      img.onerror = function() {
+                          console.error("Error loading image", img.src);
+                          checkIfAllImagesLoaded();
+                      };
+                  }
+              });
+          
+              if (images.length === 0) {
+                  generatePDF();
+              }
+          
+              function generatePDF() {
+                  doc.html(page, {
+                      callback: function(doc) {
+                          doc.save('resume.pdf');
+                      },
+                      margin: [0, 0, 0, 0],
+                      x: 0,
+                      y: 0,
+                      width: 207,
+                      windowWidth: 800,
+                      useCORS: true,
+                      html2canvas: {
+                          useCORS: true,
+                          logging: true,
+                          onclone: function(clonedDoc) {
+                              // Ensure CORS is set correctly for the cloned images
+                              var clonedImages = clonedDoc.querySelectorAll('img');
+                              clonedImages.forEach((img) => {
+                                  img.crossOrigin = "anonymous";
+                              });
+                          }
+                      }
+                  });
+              }
+          }
+          </script>
+           -->
+
+
+        <script>
+            function downloadResume() {
+                window.jsPDF = window.jspdf.jsPDF;
+    
+                var doc = new jsPDF();
+    
+                var page = document.querySelector('.container_')
+    
+                doc.html(page,{
+                    callback:function(doc){
+                        doc.save('resume.pdf')
+                    },
+                    margin:[0,0],
+                    x:0,
+                    y:0,
+                    width:207,
+                    windowWidth:800,
+                });
+            }
+          </script>
+
+        </body>
+    {% else %}
+    <h1>Cannot get your resume</h1>
+    <p>Your payment was not successful!</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/resume_preview.css' %}">
+    <title>Resume</title>
+  </head>
+  <body>
+    <h1 style="color: white; text-align: center">Resume</h1>
+    <div class="page_">
+      <div class="container_" id="resume">
+        <div class="card-container">
+          <div class="vertical-line"></div>
+          <div class="card">
+            <div class="info">
+              <h1>{{resume.first_name}} <br />{{resume.last_name}}</h1>
+              <h2>LAWYER</h2>
+              <div class="contact">
+                <div>
+                  <img src="{% static 'images/phone.png' %}" /> {{resume.phone}}
+                </div>
+                <div>
+                  <img src="{% static 'images/mail_box.png' %}" /> {{resume.email_web}}
+                </div>
+                {% if resume.website %}
+                <div>
+                  <img src="{% static 'images/website.png' %}" /> {{resume.website}}
+                </div>
+                {% endif %}
+              </div>
+            </div>  
+            <div class="photo-container">
+              <div class="pink-box"></div>
+              <div class="profile_photo">
+                <img src="{% static 'images/image.png' %}" alt="Profile Photo" />
+              </div>
+            </div>
+          </div>
+          <div class="main-content">
+            <div class="left-section">
+              <div class="profile-section">
+                <div>
+                  <img src="{% static 'images/profile_icon.png' %}" />
+                  <span class="left-section-heading">PROFILE</span>
+                </div>
+                <div class="profile-description">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Sapiente, ea ullam? Molestias, optio tenetur. Quam doloribus
+                  pariatur voluptatem in molestias distinctio officiis, ad earum
+                  ducimus dicta enim facere exercitationem non?
+                </div>
+              </div>
+              <div class="language-section">
+                <div class="language-section-heading">
+                  <img src="{% static 'images/language_icon.png' %}" />
+                  <span class="left-section-heading">LANGUAGES</span>
+                </div>
+                <div class="languages-name-container">
+                  {% for lang in resume.languages_known %}
+                  <div class="language-name">
+                    {{lang}}
+                    <div></div>
+                  </div>
+                  {% endfor %}
+                  <!-- <div class="language-name">
+                    HINDI
+                    <div></div>
+                  </div>
+                  <div class="language-name">
+                    FRENCH
+                    <div></div>
+                  </div>
+                  <div class="language-name">
+                    GERMAN
+                    <div></div>
+                  </div> -->
+                </div>
+              </div>
+              <div class="skills-section">
+                <div class="skills-section-heading">
+                  <img src="{% static 'images/skills_icon.png' %}" />
+                  <span class="left-section-heading">SKILLS</span>
+                </div>
+                <div class="skills-list">
+                  <ul>
+                    {% for skill in resume.skills %}
+                    <li>{{skill}}</li>
+                    {% endfor %}
+                    <!-- <li>Lorem ipsum</li>
+                    <li>Lorem ipsum</li>
+                    <li>Lorem ipsum</li>
+                    <li>Lorem ipsum</li> -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="right-section">
+              <div class="education-section">
+                <div class="education-section-heading">
+                  <img src="{% static 'images/education_icon.png' %}" />
+                  <span class="left-section-heading">EDUCATION</span>
+                </div>
+                <div class="education-container">
+                  <ul>
+                    {% for edu in resume.education %}
+                    <li>
+                        <div class="education-item">
+                          <div class="degree-year">{{edu.year}} - {{edu.year}}</div>
+                          <div class="degree-details">
+                            <div><strong>{{edu.degree}}</strong></div>
+                            <div class="college-name">{{edu.institution}}</div>
+                          </div>
+                        </div>
+                      </li>
+                    {% endfor %}
+                    <li>
+                      <div class="education-item">
+                        <div class="degree-year">2000 - 2003</div>
+                        <div class="degree-details">
+                          <div><strong>Degree Name</strong></div>
+                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                            adipiscing elit, sed</div>
+                        </div>
+                      </div>
+                    <!-- </li>
+                    <li>
+                      <div class="education-item">
+                        <div class="degree-year">2000 - 2003</div>
+                        <div class="degree-details">
+                          <div><strong>Degree Name</strong></div>
+                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                            adipiscing elit, sed</div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="education-item">
+                        <div class="degree-year">2000 - 2003</div>
+                        <div class="degree-details">
+                          <div><strong>Degree Name</strong></div>
+                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
+                            adipiscing elit, sed</div>
+                        </div>
+                      </div>
+                    </li> -->
+                    
+                  </ul>
+                </div>
+              </div>
+              <div class="experience-section">
+                <div class="experience-section-heading">
+                    <img src="{% static 'images/experience_icon.png' %}" />
+                    <span class="left-section-heading">EXPERIENCE</span>
+                  </div>
+                  <div class="experience-container">
+                    <ul>
+                        {% for exp in resume.experience %}
+                        <li>
+                            <div class="experience-item">
+                              <div class="job-year">{{exp.year}}-{{exp.year}} </div>
+                              <div class="company-details">
+                                <div><strong>{{exp.job_title}}</strong></div>
+                                <div class="company-name">{{exp.company}}</div>
+                              </div>
+                            </div>
+                          </li>
+                        {% endfor %}
+                      <li>
+                        <div class="experience-item">
+                          <div class="job-year">2000 - 2003</div>
+                          <div class="company-details">
+                            <div><strong>Degree Name</strong></div>
+                            <div class="company-name">Lorem ipsum dolor sit amet, consectetuer
+                              adipiscing elit, sed</div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-section">
+            <div>
+                <img src="{% static 'images/phone.png' %}" />
+                <div>Lorem Ipsum</div>
+            </div>
+            <div>
+                <img src="{% static 'images/phone.png' %}" />
+                <div>Lorem Ipsum</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="download-btn">
+        <a style="text-decoration: none;color: white;" href="{% url 'process_payment' resume.id %}">Proceed to Payment</a>
+      </button>
+    </div>
+  </body>
+</html>
+
+

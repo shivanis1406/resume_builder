@@ -4,8 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/resume_preview.css' %}">
+    <link rel="stylesheet" href="{% static 'css/resume_preview.css' %}" />
     <title>Resume</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
   <body>
     <h1 style="color: white; text-align: center">Resume</h1>
@@ -22,19 +23,21 @@
                   <img src="{% static 'images/phone.png' %}" /> {{resume.phone}}
                 </div>
                 <div>
-                  <img src="{% static 'images/mail_box.png' %}" /> {{resume.email_web}}
+                  <img src="{% static 'images/mail_box.png' %}" />
+                  {{resume.email_web}}
                 </div>
                 {% if resume.website %}
                 <div>
-                  <img src="{% static 'images/website.png' %}" /> {{resume.website}}
+                  <img src="{% static 'images/website.png' %}" />
+                  {{resume.website}}
                 </div>
                 {% endif %}
               </div>
-            </div>  
+            </div>
             <div class="photo-container">
               <div class="pink-box"></div>
               <div class="profile_photo">
-                <img src="{% static 'images/image.png' %}" alt="Profile Photo" />
+                <img src="{{resume.profile_photo}}" alt="Profile Photo" />
               </div>
             </div>
           </div>
@@ -106,25 +109,29 @@
                   <ul>
                     {% for edu in resume.education %}
                     <li>
-                        <div class="education-item">
-                          <div class="degree-year">{{edu.year}} - {{edu.year}}</div>
-                          <div class="degree-details">
-                            <div><strong>{{edu.degree}}</strong></div>
-                            <div class="college-name">{{edu.institution}}</div>
-                          </div>
+                      <div class="education-item">
+                        <div class="degree-year">
+                          {{edu.year}} - {{edu.year}}
                         </div>
-                      </li>
+                        <div class="degree-details">
+                          <div><strong>{{edu.degree}}</strong></div>
+                          <div class="college-name">{{edu.institution}}</div>
+                        </div>
+                      </div>
+                    </li>
                     {% endfor %}
                     <li>
                       <div class="education-item">
                         <div class="degree-year">2000 - 2003</div>
                         <div class="degree-details">
                           <div><strong>Degree Name</strong></div>
-                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
-                            adipiscing elit, sed</div>
+                          <div class="college-name">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing
+                            elit, sed
+                          </div>
                         </div>
                       </div>
-                    <!-- </li>
+                      <!-- </li>
                     <li>
                       <div class="education-item">
                         <div class="degree-year">2000 - 2003</div>
@@ -145,60 +152,121 @@
                         </div>
                       </div>
                     </li> -->
-                    
+                    </li>
                   </ul>
                 </div>
               </div>
               <div class="experience-section">
                 <div class="experience-section-heading">
-                    <img src="{% static 'images/experience_icon.png' %}" />
-                    <span class="left-section-heading">EXPERIENCE</span>
-                  </div>
-                  <div class="experience-container">
-                    <ul>
-                        {% for exp in resume.experience %}
-                        <li>
-                            <div class="experience-item">
-                              <div class="job-year">{{exp.year}}-{{exp.year}} </div>
-                              <div class="company-details">
-                                <div><strong>{{exp.job_title}}</strong></div>
-                                <div class="company-name">{{exp.company}}</div>
-                              </div>
-                            </div>
-                          </li>
-                        {% endfor %}
-                      <li>
-                        <div class="experience-item">
-                          <div class="job-year">2000 - 2003</div>
-                          <div class="company-details">
-                            <div><strong>Degree Name</strong></div>
-                            <div class="company-name">Lorem ipsum dolor sit amet, consectetuer
-                              adipiscing elit, sed</div>
+                  <img src="{% static 'images/experience_icon.png' %}" />
+                  <span class="left-section-heading">EXPERIENCE</span>
+                </div>
+                <div class="experience-container">
+                  <ul>
+                    {% for exp in resume.experience %}
+                    <li>
+                      <div class="experience-item">
+                        <div class="job-year">{{exp.year}}-{{exp.year}}</div>
+                        <div class="company-details">
+                          <div><strong>{{exp.job_title}}</strong></div>
+                          <div class="company-name">{{exp.company}}</div>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                    <li>
+                      <div class="experience-item">
+                        <div class="job-year">2000 - 2003</div>
+                        <div class="company-details">
+                          <div><strong>Degree Name</strong></div>
+                          <div class="company-name">
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing
+                            elit, sed
                           </div>
                         </div>
-                      </li>
-                    </ul>
-                  </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
           <div class="footer-section">
             <div>
-                <img src="{% static 'images/phone.png' %}" />
-                <div>Lorem Ipsum</div>
+              <img src="{% static 'images/phone.png' %}" />
+              <div>Lorem Ipsum</div>
             </div>
             <div>
-                <img src="{% static 'images/phone.png' %}" />
-                <div>Lorem Ipsum</div>
+              <img src="{% static 'images/phone.png' %}" />
+              <div>Lorem Ipsum</div>
             </div>
           </div>
         </div>
       </div>
-      <button type="button" class="download-btn">
-        <a style="text-decoration: none;color: white;" href="{% url 'process_payment' resume.id %}">Proceed to Payment</a>
-      </button>
+      <button type="button" class="download-btn" id="rzp-button1">Proceed to Payment</button>
     </div>
+
+    <script>
+      var options = {
+        key: "{{ RAZORPAY_API_KEY }}",
+        amount: "{{amount}}00", // Amount is in paise
+        currency: "INR",
+        name: "Taxom India",
+        description: "Payment Description",
+        image: "https://example.com/your_logo.png",
+        order_id: "{{ order_id }}",
+        handler: function (response) {
+          alert("Payment Successful.Redirecting to download page.");
+          sendPaymentData(response);
+        },
+        prefill: {
+          name: "Taxom India",
+          email: "cvgenerator@taxomindia.in",
+          contact: "9999999999",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+        theme: {
+          color: "#3399cc",
+        },
+      };
+      var rzp1 = new Razorpay(options);
+      document.getElementById("rzp-button1").onclick = function (e) {
+        rzp1.open();
+        e.preventDefault();
+      };
+    </script>
+    <script>
+      function sendPaymentData(response1) {
+        const payload = JSON.stringify({
+          response1,
+          resume_id: "{{ resume.id }}",
+        });
+        fetch('/payment_process/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: payload
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if(data.status == 'true'){
+              window.location = `/payment_success/${data.resume_id}/`
+              console.log('success');
+            }
+            else{
+              console.log('failed');
+              window.location = '/payment_failed'
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+    </script>
   </body>
 </html>
-
-

@@ -44,7 +44,7 @@
                 <div class="photo-container">
                   <div class="pink-box"></div>
                   <div class="profile_photo">
-                    <img src="{% static 'images/image.png' %}" alt="Profile Photo" />
+                    <img src="{{resume.profile_photo}}" alt="Profile Photo" />
                   </div>
                 </div>
               </div>
@@ -288,6 +288,10 @@
                     y:0,
                     width:207,
                     windowWidth:800,
+                    useCORS:true,
+                    html2canvas:{
+                      useCORS:true,
+                    }
                 });
             }
           </script>

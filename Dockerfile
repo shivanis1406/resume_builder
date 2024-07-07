@@ -4,7 +4,8 @@ FROM python:3.10-slim
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-# ENV STATIC_ROOT /code/static
+ENV STATIC_ROOT /code/static
+ENV STATIC_URL /code
 
 # Set the working directory in the container
 WORKDIR /code

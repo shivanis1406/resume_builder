@@ -1,266 +1,317 @@
 .card-container {
-    position: relative;
-    width: 100%;
-    min-height: 260mm;
-    height: 60%;
-    background-color: #fefefe;
-    padding: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: relative;
+  width: 100%;
+  min-height: 260mm;
+  height: 60%;
+  background-color: #fefefe;
+  padding: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.vertical-line {
+  position: absolute;
+  left: 46%;
+  top: 0%;
+  bottom: 12.5%;
+  width: 13px;
+  height: 190px;
+  background-color: #333;
+}
+
+.card {
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding-bottom: 1.5vw;
+  border-bottom: solid 1px;
+}
+
+.info {
+  margin-top: 20px;
+  padding-right: 40px;
+  flex: 1;
+}
+
+.info h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+.info h2 {
+  color: #d3a184;
+  margin: 0px 0 30px 0;
+  font-size: 1.5em;
+}
+.contact {
+  border-left: solid 1px;
+  padding-left: 2lvw;
+}
+.contact div {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size: small;
+}
+.contact div img {
+  margin-right: 5px;
+  width: 20px;
+}
+
+.photo-container {
+  position: relative;
+  display: flex;
+  /* align-items: center; */
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.pink-box {
+  position: absolute;
+  width: 249px;
+  height: 260px;
+  background-color: #fdece4;
+  top: -40px;
+  left: -14px;
+}
+
+.profile_photo {
+  position: relative;
+}
+
+.profile_photo img {
+  margin-top: 25px;
+  width: 200px;
+  height: 250px;
+}
+.download-btn {
+  width: fit-content;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #b73a3a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #a13232;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #fafafa;
+  font-family: "Poppins", sans-serif;
+  font-size: 12pt;
+
+  background: rgb(249, 249, 249);
+  background: radial-gradient(
+    circle,
+    rgba(249, 249, 249, 1) 0%,
+    rgb(22, 53, 127) 49%,
+    rgb(14, 129, 186) 100%
+  );
+  background-attachment: fixed;
+}
+.page_ {
+  width: 21cm;
+  min-height: fit-content;
+  padding: 0.5cm;
+  margin: 0.5cm auto;
+  border: 1px #d3d3d3 solid;
+  border-radius: 5px;
+  background: rgb(232, 227, 227);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.container_ {
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(60, 57, 57, 0.1);
+}
+.main-content {
+  display: flex;
+  width: 100%;
+}
+.left-section {
+  flex: 1.7;
+  display: flex;
+  flex-direction: column;
+  border-right: solid 1px;
+}
+.left-section img,
+.right-section img {
+  width: 30px;
+  margin-right: 10px;
+}
+.left-section-heading {
+  font-size: 20px;
+  font-weight: bolder;
+}
+.profile-section {
+  padding: 20px 10px;
+  flex: 1;
+  border-bottom: solid 1px;
+}
+.profile-section div {
+  display: flex;
+  align-items: center;
+}
+.profile-description {
+  padding: 10px 20px 10px 0;
+  font-size: small;
+}
+.language-section {
+  padding: 20px 10px;
+  flex: 1;
+  border-bottom: solid 1px;
+}
+.language-section-heading {
+  display: flex;
+  align-items: center;
+}
+.languages-name-container {
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-flow: row;
+  gap: 5px;
+}
+.language-name div {
+  margin-top: 5px;
+  background-color: #d3a184;
+  height: 4px;
+  border-radius: 2px;
+}
+.language-name {
+  margin: 0 10px 10px 10px;
+}
+.skills-section {
+  padding: 20px 10px;
+  flex: auto;
+  border-bottom: solid 1px;
+}
+.skills-section div {
+  display: flex;
+  align-items: center;
+}
+.skills-list li {
+  padding: 4px;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px;
+  flex: 3;
+}
+.education-section {
+  padding: 20px 0 10px 25px;
+  flex: 1fr;
+  border-bottom: solid 1px;
+}
+.education-section-heading,
+.experience-section-heading {
+  display: flex;
+  align-items: center;
+}
+.education-container,
+.experience-container {
+  margin-left: 10px;
+}
+.education-item,
+.experience-item {
+  display: flex;
+}
+.education-container ul li,
+.experience-container ul li {
+  margin-bottom: 10px;
+}
+.college-name,
+.company-name {
+  font-size: smaller;
+}
+.degree-year,
+.job-year {
+  min-width: fit-content;
+}
+.degree-details,
+.company-details {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px 20px 20px;
+  word-wrap: break-word;
+}
+.experience-section {
+  padding: 20px 0 10px 25px;
+  flex: 1fr;
+}
+.footer-section {
+  display: flex;
+  align-items: center;
+}
+.footer-section div {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+.footer-section img {
+  width: 16px;
+}
+
+.loading {
+  left: 50%;
+  top: 50%;
+  font-size: 36px;
+  font-family: serif;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  letter-spacing: 4.4px;
+  text-transform: capitalize;
+  position: absolute;
+  overflow: hidden;
+  scrollbar-width: 0;
+  transform: translate(-50%, -60%);
+}
+
+.loading:before {
+  color: #aaa;
+  content: attr(data-loading-text);
+}
+.loading:after {
+  top: 0;
+  left: 0;
+  width: 0;
+  opacity: 1;
+  color: #444;
+  overflow: hidden;
+  position: absolute;
+  content: attr(data-loading-text);
+  animation: loading 4s infinite;
+}
+
+@keyframes loading {
+  0% { 
+    width: 0; 
   }
-  .vertical-line {
-    position: absolute;
-    left: 46%;
-    top: 0%;
-    bottom: 12.5%;
-    width: 13px;
-    height: 190px;
-    background-color: #333;
+  100% {
+    width: 100%; 
   }
-  
-  .card {
-    display: flex;
-    position: relative;
-    width: 100%;
-    padding-bottom: 1.5vw;
-    border-bottom: solid 1px;
-  }
-  
-  .info {
-    margin-top: 20px;
-    padding-right: 40px;
-    flex: 1;
-  }
-  
-  .info h1 {
-    font-size: 3em;
-    margin: 0;
-  }
-  
-  .info h2 {
-    color: #d3a184;
-    margin: 0px 0 30px 0;
-    font-size: 1.5em;
-  }
-  .contact {
-    border-left: solid 1px;
-    padding-left: 2lvw;
-  }
-  .contact div {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-    font-size: small;
-  }
-  .contact div img {
-    margin-right: 5px;
-    width: 20px;
-  }
-  
-  .photo-container {
-    position: relative;
-    display: flex;
-    /* align-items: center; */
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    flex: 1;
-  }
-  
-  .pink-box {
-    position: absolute;
-    width: 249px;
-    height: 260px;
-    background-color: #fdece4;
-    top: -40px;
-    left: -14px;
-  }
-  
-  .profile_photo {
-    position: relative;
-  }
-  
-  .profile_photo img {
-    margin-top: 25px;
-    width: 200px;
-    height: 250px;
-  }
-  .download-btn {
-    width: fit-content;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #b73a3a;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .download-btn:hover {
-    background-color: #a13232;
-  }
-  body {
-    margin: 0;
-    padding: 0;
-    background-color: #fafafa;
-    font-family: "Poppins", sans-serif;
-    font-size: 12pt;
-  
-    background: rgb(249, 249, 249);
-    background: radial-gradient(
-      circle,
-      rgba(249, 249, 249, 1) 0%,
-      rgb(22, 53, 127) 49%,
-      rgb(14, 129, 186) 100%
-    );
-    background-attachment: fixed;
-  }
-  .page_ {
-    width: 21cm;
-    min-height: fit-content;
-    padding: 0.5cm;
-    margin: 0.5cm auto;
-    border: 1px #d3d3d3 solid;
-    border-radius: 5px;
-    background: rgb(232, 227, 227);
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  .container_ {
-    display: flex;
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(60, 57, 57, 0.1);
-  }
-  .main-content {
-    display: flex;
-    width: 100%;
-  }
-  .left-section {
-    flex: 1.7;
-    display: flex;
-    flex-direction: column;
-    border-right: solid 1px;
-  }
-  .left-section img,
-  .right-section img {
-    width: 30px;
-    margin-right: 10px;
-  }
-  .left-section-heading {
-    font-size: 20px;
-    font-weight: bolder;
-  }
-  .profile-section {
-    padding: 20px 10px;
-    flex: 1;
-    border-bottom: solid 1px;
-  }
-  .profile-section div {
-    display: flex;
-    align-items: center;
-  }
-  .profile-description {
-    padding: 10px 20px 10px 0;
-    font-size: small;
-  }
-  .language-section {
-    padding: 20px 10px;
-    flex: 1;
-    border-bottom: solid 1px;
-  }
-  .language-section-heading {
-    display: flex;
-    align-items: center;
-  }
-  .languages-name-container {
-    padding: 20px 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-flow: row;
-    gap: 5px;
-  }
-  .language-name div {
-    margin-top: 5px;
-    background-color: #d3a184;
-    height: 4px;
-    border-radius: 2px;
-  }
-  .language-name {
-    margin: 0 10px 10px 10px;
-  }
-  .skills-section {
-    padding: 20px 10px;
-    flex: auto;
-    border-bottom: solid 1px;
-  }
-  .skills-section div {
-    display: flex;
-    align-items: center;
-  }
-  .skills-list ul {
-  }
-  .skills-list li {
-    padding: 4px;
-  }
-  
-  .right-section {
-    display: flex;
-    flex-direction: column;
-    border-bottom: solid 1px;
-    flex: 3;
-  }
-  .education-section {
-    padding: 20px 0 10px 25px;
-    flex: 1fr;
-    border-bottom: solid 1px;
-  }
-  .education-section-heading,
-  .experience-section-heading {
-    display: flex;
-    align-items: center;
-  }
-  .education-container,
-  .experience-container {
-    margin-left: 10px;
-  }
-  .education-item,
-  .experience-item {
-    display: flex;
-  }
-  .education-container ul li,
-  .experience-container ul li {
-    margin-bottom: 10px;
-  }
-  .college-name,
-  .company-name {
-    font-size: smaller;
-  }
-  .degree-year,
-  .job-year {
-    min-width: fit-content;
-  }
-  .degree-details,
-  .company-details {
-    display: flex;
-    flex-direction: column;
-    padding: 0 20px 20px 20px;
-    word-wrap: break-word;
-  }
-  .experience-section {
-    padding: 20px 0 10px 25px;
-    flex: 1fr;
-  }
-  .footer-section {
-    display: flex;
-    align-items: center;
-  }
-  .footer-section div {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-  }
-  .footer-section img {
-    width: 16px;
-  }
-  
+}
+
+.loader {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}

@@ -28,10 +28,15 @@ def create_cv(request):
         contact_info = request.POST.get('contact_info')
         email_web = request.POST.get('email_web')
         website = request.POST.get('website')
+        profession = request.POST.get('profession')
+        profile_descrition = request.POST.get('profile_text')
         profile_photo = request.FILES.get('profile_photo')
         phone = request.POST.get('phone')
         languages_known = request.POST.get('languages_known').split(',')
         skills = request.POST.get('skills').split(',')
+
+        if profession:
+            profession = profession.upper()
 
         experiences = []
         for key in request.POST:
@@ -60,7 +65,6 @@ def create_cv(request):
 
         blob = bucket.blob(f'profile_photos/{profile_photo.name}')
         blob.upload_from_file(profile_photo, content_type=mime_type)
-        # blob.make_public()
 
         resume_data = {
             'first_name': first_name.upper(),
@@ -68,6 +72,8 @@ def create_cv(request):
             'contact_info': contact_info,
             'email_web': email_web,
             'website': website,
+            'profession': profession,
+            'profile_description':profile_descrition,
             'profile_photo': blob.public_url,
             'languages_known': languages_known,
             'phone': phone,
@@ -90,9 +96,8 @@ def resume_preview(request, resume_id):
     if resume_ref.get().exists:
         resume_details = resume_ref.get().to_dict()
         resume_details['id'] = resume_id
-        amount = 100  # Set the amount dynamically or based on your requirements
+        amount = int(os.getenv('AMOUNT'))
         order_id = initiate_payment(amount)
-        print(order_id)
         context = {
             'order_id': order_id,
             'amount': amount,
@@ -110,11 +115,8 @@ def payment_process(request):
         body_data = json.loads(body_unicode)
         resume_id = body_data.get('resume_id')
 
-        print(body_data)
-
         resume_ref = db.collection('resumes').document(resume_id)
         params_dict = body_data.get('response1')
-        print(params_dict)
 
         try:
             status = client.utility.verify_payment_signature(params_dict)
@@ -163,3 +165,17 @@ def payment_success(request, resume_id):
 
 def payment_failed(request):
     return render(request, 'main/payment_failed.html')
+
+
+def enhance_text(request):
+    if request.method == 'POST':
+        body_unicode = request.body.decode('utf-8')
+        body_data = json.loads(body_unicode)
+
+        input_text = body_data.get('input_text')
+
+        enhancedText = 'This text is from backend.'
+
+        return JsonResponse({
+            'enhanced_text':enhancedText,
+        })

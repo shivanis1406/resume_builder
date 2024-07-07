@@ -29,9 +29,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DEBUG','False') == 'True'    
 
-ALLOWED_HOSTS = ['localhost','testcont-hbt3uttpdq-uc.a.run.app','cv-generator.web.app','resume-builder-69ce7.web.app','127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    'testcont-hbt3uttpdq-uc.a.run.app',
+    'cv-generator.web.app',
+    'resume-builder-69ce7.web.app',
+    'resume-builder-deploy-hbt3uttpdq-uc.a.run.app',
+    '127.0.0.1',
+    '*.a.run.app',
+    '*.web.app',
+    ]
 
 
 # Application definition
@@ -125,17 +134,17 @@ USE_TZ = True
 
 
 STATIC_ROOT = 'static/'
-STATIC_URL = '/static/'
+STATIC_URL = os.getenv('STATIC_URL')
 
 # STATICFILES_DIRS = [
 #     BASE_DIR / "static",
 # ]
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# /static/ works locally
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -143,4 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin-allow-popups"
 
-CSRF_TRUSTED_ORIGINS = ['https://testcont-hbt3uttpdq-uc.a.run.app','https://cv-generator.web.app','https://resume-builder-69ce7.web.app'] 
+CSRF_TRUSTED_ORIGINS = ['https://testcont-hbt3uttpdq-uc.a.run.app',
+                        'https://cv-generator.web.app',
+                        'https://resume-builder-69ce7.web.app',
+                        'https://resume-builder-deploy-hbt3uttpdq-uc.a.run.app',
+                        ]

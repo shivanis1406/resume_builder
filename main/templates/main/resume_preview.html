@@ -9,7 +9,10 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   </head>
   <body>
-    <h1 style="color: white; text-align: center">Resume</h1>
+    <div id="loader" class="loader">
+      <div class="loading" data-loading-text="Downloading Your Resume..."></div>
+    </div>
+    <h1 style="color: white; text-align: center">Resume Preview</h1>
     <div class="page_">
       <div class="container_" id="resume">
         <div class="card-container">
@@ -17,7 +20,7 @@
           <div class="card">
             <div class="info">
               <h1>{{resume.first_name}} <br />{{resume.last_name}}</h1>
-              <h2>LAWYER</h2>
+              <h2>{{resume.profession}}</h2>
               <div class="contact">
                 <div>
                   <img src="{% static 'images/phone.png' %}" /> {{resume.phone}}
@@ -49,10 +52,11 @@
                   <span class="left-section-heading">PROFILE</span>
                 </div>
                 <div class="profile-description">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  {{resume.profile_description}}
+                  <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Sapiente, ea ullam? Molestias, optio tenetur. Quam doloribus
                   pariatur voluptatem in molestias distinctio officiis, ad earum
-                  ducimus dicta enim facere exercitationem non?
+                  ducimus dicta enim facere exercitationem non? -->
                 </div>
               </div>
               <div class="language-section">
@@ -120,39 +124,6 @@
                       </div>
                     </li>
                     {% endfor %}
-                    <li>
-                      <div class="education-item">
-                        <div class="degree-year">2000 - 2003</div>
-                        <div class="degree-details">
-                          <div><strong>Degree Name</strong></div>
-                          <div class="college-name">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing
-                            elit, sed
-                          </div>
-                        </div>
-                      </div>
-                      <!-- </li>
-                    <li>
-                      <div class="education-item">
-                        <div class="degree-year">2000 - 2003</div>
-                        <div class="degree-details">
-                          <div><strong>Degree Name</strong></div>
-                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
-                            adipiscing elit, sed</div>
-                        </div>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="education-item">
-                        <div class="degree-year">2000 - 2003</div>
-                        <div class="degree-details">
-                          <div><strong>Degree Name</strong></div>
-                          <div class="college-name">Lorem ipsum dolor sit amet, consectetuer
-                            adipiscing elit, sed</div>
-                        </div>
-                      </div>
-                    </li> -->
-                    </li>
                   </ul>
                 </div>
               </div>
@@ -174,36 +145,26 @@
                       </div>
                     </li>
                     {% endfor %}
-                    <li>
-                      <div class="experience-item">
-                        <div class="job-year">2000 - 2003</div>
-                        <div class="company-details">
-                          <div><strong>Degree Name</strong></div>
-                          <div class="company-name">
-                            Lorem ipsum dolor sit amet, consectetuer adipiscing
-                            elit, sed
-                          </div>
-                        </div>
-                      </div>
-                    </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
           <div class="footer-section">
-            <div>
+            <!-- <div>
               <img src="{% static 'images/phone.png' %}" />
               <div>Lorem Ipsum</div>
             </div>
             <div>
               <img src="{% static 'images/phone.png' %}" />
               <div>Lorem Ipsum</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
-      <button type="button" class="download-btn" id="rzp-button1">Proceed to Payment</button>
+      <button type="button" class="download-btn" id="rzp-button1">
+        Proceed to Payment
+      </button>
     </div>
 
     <script>
@@ -216,7 +177,7 @@
         image: "https://example.com/your_logo.png",
         order_id: "{{ order_id }}",
         handler: function (response) {
-          alert("Payment Successful.Redirecting to download page.");
+          // alert("Payment Successful.Redirecting to download page.");
           sendPaymentData(response);
         },
         prefill: {
@@ -239,34 +200,35 @@
     </script>
     <script>
       function sendPaymentData(response1) {
+        const loader = document.getElementById("loader");
+        loader.style.display = "flex";
         const payload = JSON.stringify({
           response1,
           resume_id: "{{ resume.id }}",
         });
-        fetch('/payment_process/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': '{{ csrf_token }}'
-            },
-            body: payload
+        fetch("/payment_process/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+          body: payload,
         })
-        .then(response => response.json())
-        .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             console.log(data);
-            if(data.status == 'true'){
-              window.location = `/payment_success/${data.resume_id}/`
-              console.log('success');
+            if (data.status == "true") {
+              window.location = `/payment_success/${data.resume_id}/`;
+              console.log("success");
+            } else {
+              console.log("failed");
+              window.location = "/payment_failed";
             }
-            else{
-              console.log('failed');
-              window.location = '/payment_failed'
-            }
-        })
-        .catch(error => {
+          })
+          .catch((error) => {
             console.error(error);
-        });
-    }
+          });
+      }
     </script>
   </body>
 </html>

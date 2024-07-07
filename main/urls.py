@@ -9,4 +9,5 @@ urlpatterns = [
     path('payment_success/<str:resume_id>/', payment_success, name='payment_success'),
     path('payment_process/', payment_process, name='payment_process'),
     path('payment_failed/', payment_failed, name='payment_failed'),
+    path('enhance/', enhance_text, name='enhance_text'),
 ]

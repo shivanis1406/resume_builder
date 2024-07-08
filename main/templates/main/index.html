@@ -38,32 +38,11 @@
         <!-- <option value="LAWYER">Lawyer</option> -->
       </select>
 
-      <label for="profile_text">Few Lines about yourself: </label>
-      <div class="profile_text_cont">
-        <textarea
-          type="text"
-          id="input-text"
-          name="profile_text"
-          rows="4"
-          required
-        ></textarea>
-        <br /><button
-          type="button"
-          class="enhance-button"
-          id="enhance-button"
-        >
-          <span class="button-text">Enhance with AI</span>
-          <div class="loading-indicator">
-            <div class="spinner1"></div>
-          </div>
-        </button>
-      </div>
-
       <label for="email_web">Email:</label>
       <input type="email" id="email_web" name="email_web" required /><br />
 
       <label for="website">Website:</label>
-      <input type="text" id="website" name="website" required /><br />
+      <input type="text" id="website" name="website" /><br />
 
       <label for="languages_known">Languages Known (Comma Separated):</label>
       <input
@@ -81,36 +60,6 @@
 
       <h2>Experiences</h2>
       <div id="experiencesContainer">
-        <div class="experience">
-          <fieldset>
-            <legend>Experience 1</legend>
-            <label for="job_title_0">Job Title:</label>
-            <input
-              type="text"
-              id="job_title_0"
-              name="experiences[0][job_title]"
-              required
-            /><br />
-
-            <label for="company_0">Company:</label>
-            <input
-              type="text"
-              id="company_0"
-              name="experiences[0][company]"
-              required
-            /><br />
-
-            <label for="year_0">Year:</label>
-            <input
-              type="text"
-              id="year_0"
-              name="experiences[0][year]"
-              required
-            /><br />
-
-            <span class="remove-button" style="visibility: hidden">Remove</span>
-          </fieldset>
-        </div>
       </div>
       <button type="button" onclick="addExperience()">Add Experience</button
       ><br />
@@ -151,6 +100,28 @@
       <button type="button" onclick="addEducation()">Add Education</button
       ><br /><br />
 
+      <label for="profile_text">Few Lines about yourself: (not more than 30-35 words)</label>
+      <div class="profile_text_cont">
+        <textarea
+          type="text"
+          id="input-text"
+          name="profile_text"
+          rows="4"
+          required
+        ></textarea>
+        <br /><button
+          type="button"
+          class="enhance-button"
+          id="enhance-button"
+          onclick="getTextFromAI()"
+        >
+          <span class="button-text">Enhance with AI</span>
+          <div class="loading-indicator">
+            <div class="spinner1"></div>
+          </div>
+        </button>
+      </div>
+
       <button type="submit">Submit</button>
     </form>
 
@@ -167,40 +138,62 @@
 
     <script>
       function getTextFromAI() {
-        var inputText = document.getElementById("input-text").value;
-        var buttonElement = document.getElementById("enhance-button");
-        var buttonTextElement = buttonElement.querySelector(".button-text");
-        var loadingIndicatorElement =
+        const form = document.getElementById("resumeForm");
+        const inputText = document.getElementById("input-text").value;
+        const buttonElement = document.getElementById("enhance-button");
+        const buttonTextElement = buttonElement.querySelector(".button-text");
+        const loadingIndicatorElement =
           buttonElement.querySelector(".loading-indicator");
-        if (inputText === "") {
-          alert("Enter Some text to use AI.");
-        } else {
-          buttonTextElement.style.display = "none";
-          loadingIndicatorElement.style.display = "block";
-          console.log(inputText);
-          fetch("/enhance/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": "{{ csrf_token }}",
-            },
-            body: JSON.stringify({ input_text: inputText }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setTimeout(function () {
-                buttonTextElement.style.display = "inline-block";
-                loadingIndicatorElement.style.display = "none";
-                document.getElementById("input-text").value =
-                  data.enhanced_text;
-              }, 1500);
-            })
-            .catch((error) => {
+
+          if (inputText === "") {
+            alert("Enter some text to use AI.");
+            return;
+          }
+          if (!form.checkValidity()) {
+            alert("Please fill out all required fields before using Enhance with AI.");
+            return;
+          }
+
+        const formData = new FormData(form);
+        const formDict = {};
+
+        formData.forEach((value, key) => {
+          if (formDict[key]) {
+            if (!Array.isArray(formDict[key])) {
+              formDict[key] = [formDict[key]];
+            }
+            formDict[key].push(value);
+          } else {
+            formDict[key] = value;
+          }
+        });
+
+        formDict["input_text"] = inputText;
+
+        buttonTextElement.style.display = "none";
+        loadingIndicatorElement.style.display = "block";
+
+        fetch("/enhance/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}",
+          },
+          body: JSON.stringify(formDict),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setTimeout(() => {
               buttonTextElement.style.display = "inline-block";
               loadingIndicatorElement.style.display = "none";
-              console.error("Error:", error);
-            });
-        }
+              document.getElementById("input-text").value = data.enhanced_text;
+            }, 1500);
+          })
+          .catch((error) => {
+            buttonTextElement.style.display = "inline-block";
+            loadingIndicatorElement.style.display = "none";
+            console.error("Error:", error);
+          });
       }
     </script>
 

@@ -133,7 +133,7 @@ USE_TZ = True
 
 
 
-STATIC_ROOT = 'static/'
+STATIC_ROOT = '/static/'
 STATIC_URL = os.getenv('STATIC_URL')
 
 # STATICFILES_DIRS = [

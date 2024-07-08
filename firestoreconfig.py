@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import firebase_admin
 from firebase_admin import credentials,firestore,storage
 load_dotenv()
+from google.oauth2 import service_account
 
 firebase_config = {
     "type": os.getenv('FIREBASE_TYPE'),
@@ -19,6 +20,7 @@ firebase_config = {
 }
 
 cred = credentials.Certificate(firebase_config)
+google_credentials = service_account.Credentials.from_service_account_info(firebase_config)
 
 firebase_admin.initialize_app(cred,{
     "storageBucket": os.getenv('STORAGE_BUCKET'),

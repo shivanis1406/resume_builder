@@ -1,13 +1,19 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect,HttpResponse
 from django.views.decorators.csrf import csrf_protect,csrf_exempt
-from firestoreconfig import db,bucket
+from firestoreconfig import db,bucket,google_credentials,firebase_config
 import magic
 import os
 from dotenv import load_dotenv
 import razorpay
 load_dotenv()
 import json
+from google.cloud import aiplatform
+
+from vertexai.language_models import TextGenerationModel
+PROJECT_ID = 'resume-builder-69ce7'
+import vertexai
+REGION = 'us-central1'
 
 RAZORPAY_API_KEY = os.getenv('RAZORPAY_API_KEY')
 RAZORPAY_API_SECRET = os.getenv('RAZORPAY_API_SECRET')
@@ -167,14 +173,71 @@ def payment_failed(request):
     return render(request, 'main/payment_failed.html')
 
 
+def getPrompt(form_data):
+    input_text = form_data.get('profile_text', '')
+    first_name = form_data.get('first_name', '')
+    last_name = form_data.get('last_name', '')
+    profession = form_data.get('profession', '')
+    email = form_data.get('email_web', '')
+    website = form_data.get('website', '')
+    languages_known = form_data.get('languages_known', '')
+    phone = form_data.get('phone', '')
+    skills = form_data.get('skills', '')
+    input_text = form_data.get('input_text')
+
+    experiences = []
+    for key in form_data:
+        if key.startswith('experiences['):
+            index = key.split('[')[1].split(']')[0]
+            if index.isdigit():
+                index = int(index)
+                while len(experiences) <= index:
+                    experiences.append({})
+                experiences[index][key.split('][')[1].split(']')[0]] = form_data[key]
+
+    educations = []
+    for key in form_data:
+        if key.startswith('educations['):
+            index = key.split('[')[1].split(']')[0]
+            if index.isdigit():
+                index = int(index)
+                while len(educations) <= index:
+                    educations.append({})
+                educations[index][key.split('][')[1].split(']')[0]] = form_data[key]
+
+    experience_text = ""
+    for exp in experiences:
+        experience_text += f"{first_name} have experience as a {exp['job_title']} at {exp['company']} company in ({exp['year']}), "
+
+    education_text = ""
+    for edu in educations:
+        education_text += f" {first_name} holds a {edu['degree']} degree from {edu['institution']} ({edu['year']}), "
+
+    prompt = f"""
+    Create a 4-5 sentence bio for the user with the following info. Highlight his skills and experience:
+    Name: {first_name} {last_name}
+    Profession: {profession}
+    About: '{input_text}'
+    Languages Known: {languages_known}
+    Skills: {skills}
+    Educations: {education_text.strip(', ')}
+    Experiences: {experience_text.strip(', ')}
+    Note: The experiences field may be empty. If so, focus more on skills and education.
+    """
+    return prompt
+
 def enhance_text(request):
     if request.method == 'POST':
         body_unicode = request.body.decode('utf-8')
         body_data = json.loads(body_unicode)
 
-        input_text = body_data.get('input_text')
+        prompt = getPrompt(body_data)
 
-        enhancedText = 'This text is from backend.'
+        aiplatform.init(credentials=google_credentials)
+        vertexai.init(project = PROJECT_ID, location = REGION, credentials = google_credentials)
+
+        generation_model = TextGenerationModel.from_pretrained("text-bison@001")
+        enhancedText = generation_model.predict(prompt=prompt).text
 
         return JsonResponse({
             'enhanced_text':enhancedText,

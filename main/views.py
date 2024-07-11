@@ -30,19 +30,20 @@ def header(request):
 def create_cv(request):
     if request.method == 'POST':
         first_name = request.POST.get('first_name')
+        middle_name = request.POST.get('middle_name')
         last_name = request.POST.get('last_name')
         contact_info = request.POST.get('contact_info')
         email_web = request.POST.get('email_web')
         website = request.POST.get('website')
-        profession = request.POST.get('profession')
+        # profession = request.POST.get('profession')
         profile_descrition = request.POST.get('profile_text')
         profile_photo = request.FILES.get('profile_photo')
         phone = request.POST.get('phone')
         languages_known = request.POST.get('languages_known').split(',')
         skills = request.POST.get('skills').split(',')
 
-        if profession:
-            profession = profession.upper()
+        # if profession:
+        #     profession = profession.upper()
 
         experiences = []
         for key in request.POST:
@@ -74,11 +75,11 @@ def create_cv(request):
 
         resume_data = {
             'first_name': first_name.upper(),
+            'middle_name': middle_name.upper(),
             'last_name': last_name.upper(),
             'contact_info': contact_info,
             'email_web': email_web,
             'website': website,
-            'profession': profession,
             'profile_description':profile_descrition,
             'profile_photo': blob.public_url,
             'languages_known': languages_known,
